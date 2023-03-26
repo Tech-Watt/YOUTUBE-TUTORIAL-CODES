@@ -1,0 +1,10 @@
+1 opencv-python
+2 cvzone
+3 torch
+4 ultralytics
+5 filterpy
+6 torchvision
+7 numpy
+8 skiimage
+9 matplotlib
+10 lap
