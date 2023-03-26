@@ -6,8 +6,9 @@ from sort import *
 import numpy as np
 
 
-cap = cv.VideoCapture('bot.mp4')
-model = YOLO('yolov8n.pt')
+cap = cv.VideoCapture('bot1.mp4')
+model = YOLO('yolov8l.pt')
+
 
 tracker = Sort(max_age=20,min_hits=3)
 line = [1100,0,1100,900]
@@ -17,9 +18,16 @@ counterin = []
 classnames = []
 with open('classes.txt','r') as f:
     classnames = f.read().splitlines()
+
+
 while 1:
-    rt,img = cap.read()
-    # img = cv.resize(img,(640,480))
+    ret,img = cap.read()
+
+    if not ret:
+        cap = cv.VideoCapture('bot1.mp4')
+        continue
+
+
 
     detections = np.empty((0, 5))
 
@@ -34,7 +42,7 @@ while 1:
             class_detect = int(class_detect)
             class_detect = classnames[class_detect]
             conf = math.ceil(confidence * 100)
-            if class_detect == 'bottle' and conf >= 50:
+            if class_detect == 'bottle' and conf >= 80:
                 x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
 
                 current_detections = np.array([x1, y1, x2, y2, conf])
@@ -52,8 +60,9 @@ while 1:
         w, h = x2 - x1, y2 - y1
         cx, cy = x1 + w // 2, y1 + h // 2
 
+
         # cv.circle(img,(cx,cy),8,(0,255,255),-1)
-        cv.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+        cvzone.cornerRect(img,[x1,y1,w,h],rt=5)
         cvzone.putTextRect(img, f'{id}', [x1 + 8, y1 - 12],
                            scale=2, thickness=2)
 
