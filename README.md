@@ -1,1 +1,1 @@
-This repo contains the codes for all my tutorial on my Youtube channel.
+This repo contains the code for my tutorials on my YouTube channel.
